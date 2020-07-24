@@ -14,12 +14,10 @@ class SeasonStats < Stats
   end
 
   def winningest_coach(season_id)
-    season_wins_grouped_by_coach = group_season_wins_by_coach(season_id)
-    season_wins_grouped_by_coach.max_by {|_, wins| wins}.first
+    group_season_wins_by_coach(season_id).max_by {|_, wins| wins}.first
   end
 
   def worst_coach(season_id)
-    # season_wins_grouped_by_coach = group_season_wins_by_coach(season_id)
     group_season_wins_by_coach(season_id).min_by {|_, wins| wins}.first
   end
 
