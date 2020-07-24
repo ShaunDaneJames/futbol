@@ -22,8 +22,7 @@ class SeasonStats < Stats
   end
 
   def most_accurate_team(season_id)
-    games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #make these into helper method
+    team_id = gather_season_games(season_id).group_by {|team| team.team_id} #make these into helper method
     goals = team_id.transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
@@ -31,8 +30,7 @@ class SeasonStats < Stats
   end
 
   def least_accurate_team(season_id)
-    games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #helper
+    team_id = gather_season_games(season_id).group_by {|team| team.team_id} #helper
     goals = team_id.transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
