@@ -1,8 +1,5 @@
 class SeasonStats < Stats
 
-  # def unique_games
-  #   @games.count
-  # end
   def gather_season_games(season_id)
     games_within_season = @games.select {|game| game.season == season_id}
     game_ids = games_within_season.collect {|game| game.game_id}
@@ -10,8 +7,7 @@ class SeasonStats < Stats
   end
 
   def group_season_wins_by_coach(season_id)
-    season_game_ids = gather_season_games(season_id)
-    games_grouped_by_coach = season_game_ids.group_by {|game| game.head_coach}
+    games_grouped_by_coach = gather_season_games(season_id).group_by {|game| game.head_coach}
     games_grouped_by_coach.each do |coach, games_array|
       games_grouped_by_coach[coach] = games_array.find_all {|game| game.result == "WIN"}.count
     end
@@ -23,8 +19,8 @@ class SeasonStats < Stats
   end
 
   def worst_coach(season_id)
-    season_wins_grouped_by_coach = group_season_wins_by_coach(season_id)
-    season_wins_grouped_by_coach.min_by {|_, wins| wins}.first
+    # season_wins_grouped_by_coach = group_season_wins_by_coach(season_id)
+    group_season_wins_by_coach(season_id).min_by {|_, wins| wins}.first
   end
 
   def most_accurate_team(season_id)
