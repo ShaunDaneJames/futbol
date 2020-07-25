@@ -44,16 +44,7 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_it_can_get_count_of_games_by_season
-    #we need to get a better sampling if we use the fixture files
     expected = {"20122013"=>37}
-    # expected = {
-    #   "20122013"=>806,
-    #   "20162017"=>1317,
-    #   "20142015"=>1319,
-    #   "20152016"=>1321,
-    #   "20132014"=>1323,
-    #   "20172018"=>1355
-    # }
     assert_equal expected, @stat_tracker.count_of_games_by_season
   end
 
@@ -63,14 +54,6 @@ class StatTrackerTest < MiniTest::Test
 
   def test_it_can_get_average_goals_by_season
     expected = {"20122013"=>3.81}
-    # expected = {
-    #   "20122013"=>4.12,
-    #   "20162017"=>4.23,
-    #   "20142015"=>4.14,
-    #   "20152016"=>4.16,
-    #   "20132014"=>4.19,
-    #   "20172018"=>4.44
-    # }
     assert_equal expected, @stat_tracker.average_goals_by_season
   end
   #league stats
@@ -107,17 +90,9 @@ class StatTrackerTest < MiniTest::Test
   end
 
   def test_it_can_group_season_wins_by_coach
-    expected = {"John Tortorella"=>0,
-                "Claude Julien"=>9,
-                "Dan Bylsma"=>0,
-                "Mike Babcock"=>6,
-                "Joel Quenneville"=>7,
-                "Paul MacLean"=>3,
-                "Michel Therrien"=>1,
-                "Mike Yeo"=>1,
-                "Darryl Sutter"=>3,
-                "Ken Hitchcock"=>3,
-                "Bruce Boudreau"=>3}
+    expected = {"John Tortorella"=>0, "Claude Julien"=>9, "Dan Bylsma"=>0, "Mike Babcock"=>6,
+                "Joel Quenneville"=>7, "Paul MacLean"=>3, "Michel Therrien"=>1, "Mike Yeo"=>1,
+                "Darryl Sutter"=>3, "Ken Hitchcock"=>3, "Bruce Boudreau"=>3}
     assert_equal expected, @stat_tracker.group_season_wins_by_coach("20122013")
   end
 
@@ -145,14 +120,8 @@ class StatTrackerTest < MiniTest::Test
     assert_equal "Sporting Kansas City", @stat_tracker.fewest_tackles("20122013")
   end
   # team stats tests
-
   def test_it_can_get_team_info
-    expected = {"team_id"=>"17",
-                "franchise_id"=>"12",
-                "team_name"=>"LA Galaxy",
-                "abbreviation"=>"LA",
-                "link"=>"/api/v1/teams/17"}
-
+    expected = {"team_id"=>"17", "franchise_id"=>"12", "team_name"=>"LA Galaxy", "abbreviation"=>"LA", "link"=>"/api/v1/teams/17"}
     assert_equal expected, @stat_tracker.team_info("17")
   end
 
