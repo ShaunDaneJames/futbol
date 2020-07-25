@@ -9,10 +9,7 @@ require_relative 'team_stats'
 require_relative 'season_stats'
 
 class StatTracker
-  attr_reader :game_stats,
-              :league_stats,
-              :team_stats,
-              :season_stats
+  attr_reader :game_stats, :league_stats, :team_stats, :season_stats
 
   def self.from_csv(data)
     StatTracker.new(data)
@@ -24,9 +21,7 @@ class StatTracker
     @league_stats = LeagueStats.new(data)
     @season_stats = SeasonStats.new(data)
   end
-
 # game stats
-
   def highest_total_score
     @game_stats.highest_total_score
   end
@@ -59,7 +54,6 @@ class StatTracker
     @game_stats.average_goals_by_season
   end
 #league stats
-
   def count_of_teams
     @league_stats.count_of_teams
   end
@@ -120,7 +114,6 @@ class StatTracker
     @team_stats.rival(team_id)
   end
 #season stats
-
   def gather_season_games(season_id)
     @season_stats.gather_season_games(season_id)
   end
@@ -152,5 +145,4 @@ class StatTracker
   def fewest_tackles(season_id)
     @season_stats.fewest_tackles(season_id)
   end
-
 end
