@@ -25,11 +25,18 @@ class SeasonStats < Stats
     gather_season_games(season_id).group_by {|team| team.team_id}
   end
 
-  def most_accurate_team(season_id)
+  def get_goals(season_id)
     goals = get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
-    end
-    @teams.find {|team| team.team_id == goals.max_by {|_, ratio| ratio}.first}.team_name
+      end
+  end
+
+  def most_accurate_team(season_id)
+    # goals = get_team_id(season_id).transform_values do |game_team|
+    #   require "pry"; binding.pry
+    #   game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
+    # end
+    @teams.find {|team| team.team_id == get_goals(season_id).max_by {|_, ratio| ratio}.first}.team_name
   end
 
   def least_accurate_team(season_id)
