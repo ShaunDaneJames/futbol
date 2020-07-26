@@ -39,11 +39,17 @@ class SeasonStats < Stats
     @teams.find {|team| team.team_id == get_goals(season_id).min_by {|_, ratio| ratio}.first}.team_name
   end
 
-  def most_tackles(season_id)
+  def get_tackels(season_id)
     tackles = get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.tackles}
     end
-    @teams.find {|team| team.team_id == tackles.max_by {|_, ratio| ratio}.first}.team_name
+  end
+
+  def most_tackles(season_id)
+    # tackles = get_team_id(season_id).transform_values do |game_team|
+    #   game_team.sum {|game| game.tackles}
+    # end
+    @teams.find {|team| team.team_id == get_tackels(season_id).max_by {|_, ratio| ratio}.first}.team_name
   end
 
   def fewest_tackles(season_id)
