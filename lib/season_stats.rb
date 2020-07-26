@@ -26,7 +26,6 @@ class SeasonStats < Stats
   end
 
   def most_accurate_team(season_id)
-    # team_id = gather_season_games(season_id).group_by {|team| team.team_id}
     goals = get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
@@ -34,8 +33,7 @@ class SeasonStats < Stats
   end
 
   def least_accurate_team(season_id)
-    team_id = gather_season_games(season_id).group_by {|team| team.team_id}
-    goals = team_id.transform_values do |game_team|
+    goals = get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
     @teams.find {|team| team.team_id == goals.min_by {|_, ratio| ratio}.first}.team_name
