@@ -46,9 +46,6 @@ class SeasonStats < Stats
   end
 
   def most_tackles(season_id)
-    # tackles = get_team_id(season_id).transform_values do |game_team|
-    #   game_team.sum {|game| game.tackles}
-    # end
     @teams.find {|team| team.team_id == get_tackels(season_id).max_by {|_, ratio| ratio}.first}.team_name
   end
 
