@@ -13,7 +13,6 @@ class LeagueStats < Stats
     best_offense = game_teams_by_team_id.max_by do |team_id, game_teams|
       game_teams.sum{|game_team| game_team.goals} / game_teams.count.to_f
     end.first
-
     @teams.find{|team| team.team_id == best_offense}.team_name
   end
 
@@ -21,7 +20,6 @@ class LeagueStats < Stats
     worst_offense = game_teams_by_team_id.min_by do |team_id, game_teams|
       game_teams.sum{|game_team| game_team.goals} / game_teams.count.to_f
     end.first
-
     @teams.find{|team| team.team_id == worst_offense}.team_name
   end
 
@@ -72,5 +70,4 @@ class LeagueStats < Stats
 
     @teams.find{|team| team.team_id == worst_home_team}.team_name
   end
-
 end
