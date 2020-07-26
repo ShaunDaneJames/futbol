@@ -47,8 +47,7 @@ class SeasonStats < Stats
   end
 
   def fewest_tackles(season_id)
-    team_id = gather_season_games(season_id).group_by {|team| team.team_id}
-    tackles = team_id.transform_values do |game_team|
+    tackles = get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.tackles}
     end
     @teams.find {|team| team.team_id == tackles.min_by {|_, ratio| ratio}.first}.team_name
