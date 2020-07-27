@@ -14,17 +14,13 @@ class GameTest < MiniTest::Test
                   }
 
   @game = Game.new(game_param)
-
   end
 
   def test_game_exists
-
     assert_instance_of Game, @game
-
   end
 
   def test_game_has_attributes
-
     assert_equal "2012030221", @game.game_id
     assert_equal "20122013", @game.season
     assert_equal "3", @game.away_team_id
@@ -32,8 +28,5 @@ class GameTest < MiniTest::Test
     assert_equal 2, @game.away_goals
     assert_equal 3, @game.home_goals
     assert_equal 5, @game.total_goals
-
   end
-
-
 end

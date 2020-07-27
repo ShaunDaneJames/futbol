@@ -12,8 +12,6 @@ class TeamTest < MiniTest::Test
                   link: "/api/v1/teams/1"}
 
     @team = Team.new(team_param)
-
-
   end
 
   def test_team_exists
@@ -27,5 +25,4 @@ class TeamTest < MiniTest::Test
     assert_equal "ATL", @team.abbreviation
     assert_equal "/api/v1/teams/1", @team.link
   end
-
 end
