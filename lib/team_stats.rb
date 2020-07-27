@@ -1,6 +1,5 @@
 class TeamStats < Stats
 
-
   def team_info(team_id)
     result = @teams.find do |team|
       team.team_id == team_id
@@ -25,7 +24,7 @@ class TeamStats < Stats
   end
 
   def team_games_grouped_by_season(team_id)
-    find_home_or_away(team_id).group_by {|game| game.season}
+    find_home_or_away(team_id).group_by {|game| game.season} #This line is not getting covered on our coverage report
   end
 
   def best_season(team_id)
@@ -88,7 +87,7 @@ class TeamStats < Stats
     the_team = result.min_by {|_, ratio| ratio}.first
     @teams.find {|team| team.team_id == the_team}.team_name
   end
-  
+
   def rival(team_id)
     find_game_ids = find_all_games_by_given_team_id(team_id).map {|game| game.game_id}
     find_given_ids_opponents = @game_teams.find_all {|game| find_game_ids.include?(game.game_id) && game.team_id != team_id}
