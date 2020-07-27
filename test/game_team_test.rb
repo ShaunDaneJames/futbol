@@ -28,5 +28,4 @@ class GameTeamTest < MiniTest::Test
     assert_equal "John Tortorella", @game_team.head_coach
     assert_equal 2, @game_team.goals
   end
-
 end
