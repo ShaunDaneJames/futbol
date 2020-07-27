@@ -1,8 +1,5 @@
 class SeasonStats < Stats
 
-  # def unique_games
-  #   @games.count
-  # end
   def gather_season_games(season_id)
     games_within_season = @games.select {|game| game.season == season_id}
     game_ids = games_within_season.collect {|game| game.game_id}
