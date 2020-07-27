@@ -27,7 +27,7 @@ Testing was conducted with different approaches. For the development of our
 methods, we utilized fixtures, the fixtures were created by importing data
 from the Game, GameTeams and Teams CSV files. This allowed our testing to
 perform its basic function which is to determine if the method gave us the
-information we needed. Using fixture files also allowed the testint times to
+information we needed. Using fixture files also allowed the testing times to
 be reduced from over 60 seconds to under 5 seconds when we run our rake file.
 Additionally, we utilized the Futbol Spec Harness to ensure that our methods
 were passing our main project requirements.
