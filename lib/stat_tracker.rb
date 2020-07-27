@@ -21,11 +21,7 @@ class StatTracker
     @league_stats = LeagueStats.new(data)
     @season_stats = SeasonStats.new(data)
   end
-<<<<<<< HEAD
-
-=======
 # game stats
->>>>>>> a7a73862331147f831f2920b3ec72873e3e3c8b9
   def highest_total_score
     @game_stats.highest_total_score
   end
@@ -57,11 +53,7 @@ class StatTracker
   def average_goals_by_season
     @game_stats.average_goals_by_season
   end
-<<<<<<< HEAD
-
-=======
 #league stats
->>>>>>> a7a73862331147f831f2920b3ec72873e3e3c8b9
   def count_of_teams
     @league_stats.count_of_teams
   end
@@ -89,7 +81,7 @@ class StatTracker
   def lowest_scoring_home_team
     @league_stats.lowest_scoring_home_team
   end
-
+#team stats
   def team_info(team_id)
     @team_stats.team_info(team_id)
   end
@@ -121,11 +113,7 @@ class StatTracker
   def rival(team_id)
     @team_stats.rival(team_id)
   end
-<<<<<<< HEAD
-
-=======
 #season stats
->>>>>>> a7a73862331147f831f2920b3ec72873e3e3c8b9
   def gather_season_games(season_id)
     @season_stats.gather_season_games(season_id)
   end
