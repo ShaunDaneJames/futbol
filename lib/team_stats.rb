@@ -1,6 +1,5 @@
 class TeamStats < Stats
 
-
   def team_info(team_id)
     result = @teams.find do |team|
       team.team_id == team_id

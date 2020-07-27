@@ -1,8 +1,5 @@
 class SeasonStats < Stats
 
-  # def unique_games
-  #   @games.count
-  # end
   def gather_season_games(season_id)
     games_within_season = @games.select {|game| game.season == season_id}
     game_ids = games_within_season.collect {|game| game.game_id}
@@ -29,7 +26,7 @@ class SeasonStats < Stats
 
   def most_accurate_team(season_id)
     games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #make these into helper method
+    team_id = games_within_season.group_by {|team| team.team_id}
     goals = team_id.transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
@@ -38,7 +35,7 @@ class SeasonStats < Stats
 
   def least_accurate_team(season_id)
     games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #helper
+    team_id = games_within_season.group_by {|team| team.team_id}
     goals = team_id.transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
@@ -47,7 +44,7 @@ class SeasonStats < Stats
 
   def most_tackles(season_id)
     games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #helper
+    team_id = games_within_season.group_by {|team| team.team_id}
     tackles = team_id.transform_values do |game_team|
       game_team.sum {|game| game.tackles}
     end
@@ -56,7 +53,7 @@ class SeasonStats < Stats
 
   def fewest_tackles(season_id)
     games_within_season = gather_season_games(season_id)
-    team_id = games_within_season.group_by {|team| team.team_id} #helper
+    team_id = games_within_season.group_by {|team| team.team_id}
     tackles = team_id.transform_values do |game_team|
       game_team.sum {|game| game.tackles}
     end
