@@ -1,6 +1,7 @@
 require_relative 'test_helper'
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 require './lib/game'
 require './lib/team'
 require './lib/game_team'
@@ -23,6 +24,17 @@ class GameStatsTest < Minitest::Test
   end
 
   def test_it_can_get_highest_total_score
+    game_1 = mock('game_1')
+    game_1.stubs(:away_goals).returns(0)
+    game_1.stubs(:home_goals).returns(5)
+    game_2 = mock('game_2')
+    game_2.stubs(:away_goals).returns(2)
+    game_2.stubs(:home_goals).returns(2)
+    game_3 = mock('game_3')
+    game_3.stubs(:away_goals).returns(1)
+    game_3.stubs(:home_goals).returns(1)
+    games = [game_1, game_2, game_3]
+    @game_stats.stubs(:games).returns(games)
     assert_equal 5, @game_stats.highest_total_score
   end
 
