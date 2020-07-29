@@ -25,31 +25,24 @@ class SeasonStats < Stats
     gather_season_games(season_id).group_by {|team| team.team_id}
   end
 
-  def get_goals(season_id)
-    goals = get_team_id(season_id).transform_values do |game_team|
-      game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
-      end
-  end
 
   def most_accurate_team(season_id)
-    @teams.find {|team| team.team_id == get_goals(season_id).max_by {|_, ratio| ratio}.first}.team_name
+    goals = get_goals(season_id)
+    @teams.find {|team| team.team_id == goals.max_by {|_, ratio| ratio}.first}.team_name
   end
 
   def least_accurate_team(season_id)
-    @teams.find {|team| team.team_id == get_goals(season_id).min_by {|_, ratio| ratio}.first}.team_name
-  end
-
-  def get_tackels(season_id)
-    tackles = get_team_id(season_id).transform_values do |game_team|
-      game_team.sum {|game| game.tackles}
-    end
+    goals = get_goals(season_id)
+    @teams.find {|team| team.team_id == goals.min_by {|_, ratio| ratio}.first}.team_name
   end
 
   def most_tackles(season_id)
+    tackles = get_tackels(season_id)
     @teams.find {|team| team.team_id == get_tackels(season_id).max_by {|_, ratio| ratio}.first}.team_name
   end
 
   def fewest_tackles(season_id)
+    tackles = get_tackels(season_id)
     @teams.find {|team| team.team_id == get_tackels(season_id).min_by {|_, ratio| ratio}.first}.team_name
   end
 end
