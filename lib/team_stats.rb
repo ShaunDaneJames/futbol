@@ -23,8 +23,13 @@ class TeamStats < Stats
     @games.find_all {|game| game.away_team_id == team_id || game.home_team_id == team_id}
   end
 
+  def team_games_grouped_by_season(team_id)
+    find_home_or_away = find_home_or_away(team_id)
+    find_home_or_away.group_by {|game| game.season}
+  end
+
   def best_season(team_id)
-    team_games_grouped_by_season = find_home_or_away(team_id).group_by {|game| game.season}
+    team_games_grouped_by_season = team_games_grouped_by_season(team_id)
     team_games_grouped_by_season.each do |season, games_array|
       wins = games_array.find_all {|game| winning_game_ids(team_id).include?(game.game_id)}.count
       team_games_grouped_by_season[season] = wins.to_f / games_array.count
@@ -33,7 +38,7 @@ class TeamStats < Stats
   end
 
   def worst_season(team_id)
-    team_games_grouped_by_season = find_home_or_away(team_id).group_by {|game| game.season}
+    team_games_grouped_by_season = team_games_grouped_by_season(team_id)
     team_games_grouped_by_season.each do |season, games_array|
       wins = games_array.find_all {|game| winning_game_ids(team_id).include?(game.game_id)}.count
       team_games_grouped_by_season[season] = wins.to_f / games_array.count
@@ -70,31 +75,55 @@ class TeamStats < Stats
     @games.find_all {|game| game.home_team_id == team_id || game.away_team_id == team_id}
   end
 
-  def favorite_opponent(team_id)
-    find_game_ids = find_all_games_by_given_team_id(team_id).map {|game| game.game_id}
-    find_given_ids_opponents = @game_teams.find_all {|game| find_game_ids.include?(game.game_id) && game.team_id != team_id}
-    sorted_by_team_id = find_given_ids_opponents.group_by {|game| game.team_id}
-    result = sorted_by_team_id.transform_values do |game|
+  def find_game_ids(team_id)
+    find_all_games_by_given_team_id(team_id).map {|game| game.game_id}
+  end
+
+  def find_given_ids_opponents(team_id)
+    find_game_ids = find_game_ids(team_id)
+    @game_teams.find_all {|game| find_game_ids.include?(game.game_id) && game.team_id != team_id}
+  end
+
+  def sorted_by_team_id(team_id)
+    find_given_ids_opponents = find_given_ids_opponents(team_id)
+    find_given_ids_opponents.group_by {|game| game.team_id}
+  end
+
+  def results_where_team_lost(team_id)
+    sorted_by_team_id = sorted_by_team_id(team_id)
+    sorted_by_team_id.transform_values do |game|
       count_of_wins = game.find_all do |game|
         (game.result == "WIN")
       end.count
       (count_of_wins.to_f / game.count).round(2)
     end
-    the_team = result.min_by {|_, ratio| ratio}.first
+  end
+
+  def the_team_that_won_the_least(team_id)
+    results_where_team_lost = results_where_team_lost(team_id)
+    results_where_team_lost.min_by {|_, ratio| ratio}.first
+  end
+
+  def the_team_that_won_the_most(team_id)
+    results_where_team_lost = results_where_team_lost(team_id)
+    results_where_team_lost.max_by {|_, ratio| ratio}.first
+  end
+
+  def favorite_opponent(team_id)
+    find_game_ids = find_game_ids(team_id)
+    find_given_ids_opponents = find_given_ids_opponents(team_id)
+    sorted_by_team_id = sorted_by_team_id(team_id)
+    results_where_team_lost = results_where_team_lost(team_id)
+    the_team = the_team_that_won_the_least(team_id)
     @teams.find {|team| team.team_id == the_team}.team_name
   end
 
   def rival(team_id)
-    find_game_ids = find_all_games_by_given_team_id(team_id).map {|game| game.game_id}
-    find_given_ids_opponents = @game_teams.find_all {|game| find_game_ids.include?(game.game_id) && game.team_id != team_id}
-    sorted_by_team_id = find_given_ids_opponents.group_by {|game| game.team_id}
-    result = sorted_by_team_id.transform_values do |game|
-      count_of_wins = game.find_all do |game|
-        (game.result == "WIN")
-      end.count
-      (count_of_wins.to_f / game.count).round(2)
-    end
-    the_team = result.max_by {|_, ratio| ratio}.first
+    find_game_ids = find_game_ids(team_id)
+    find_given_ids_opponents = find_given_ids_opponents(team_id)
+    sorted_by_team_id = sorted_by_team_id(team_id)
+    results_where_team_lost = results_where_team_lost(team_id)
+    the_team = the_team_that_won_the_most(team_id)
     @teams.find {|team| team.team_id == the_team}.team_name
   end
 end
