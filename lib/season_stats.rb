@@ -24,7 +24,8 @@ class SeasonStats < Stats
   end
 
   def get_team_id(season_id)
-    gather_season_games(season_id).group_by {|team| team.team_id}
+    season_games = gather_season_games(season_id)
+    season_games.group_by {|team| team.team_id}
   end
 
   def most_accurate_team(season_id)

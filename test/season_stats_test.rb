@@ -48,15 +48,4 @@ class SeasonStatsTest < Minitest::Test
     assert_equal "Sporting Kansas City", @season_stats.fewest_tackles("20122013")
   end
 
-  def test_can_get_team_id
-    #mocks and stubs?
-    skip
-    expected = {"3" => []}
-    assert_equal expected, @season_stats.get_team_id("20122013")
-  end
-
-  def test_can_get_tackles
-    #mocks and stubs
-    skip
-  end
 end
