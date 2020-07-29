@@ -14,17 +14,18 @@ class SeasonStats < Stats
   end
 
   def winningest_coach(season_id)
-    group_season_wins_by_coach(season_id).max_by {|_, wins| wins}.first
+    wins_by_coach = group_season_wins_by_coach(season_id)
+    wins_by_coach.max_by {|_, wins| wins}.first
   end
 
   def worst_coach(season_id)
-    group_season_wins_by_coach(season_id).min_by {|_, wins| wins}.first
+    wins_by_coach = group_season_wins_by_coach(season_id)
+    wins_by_coach.min_by {|_, wins| wins}.first
   end
 
   def get_team_id(season_id)
     gather_season_games(season_id).group_by {|team| team.team_id}
   end
-
 
   def most_accurate_team(season_id)
     goals = get_goals(season_id)
