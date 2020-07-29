@@ -23,11 +23,6 @@ class SeasonStats < Stats
     wins_by_coach.min_by {|_, wins| wins}.first
   end
 
-  def get_team_id(season_id)
-    season_games = gather_season_games(season_id)
-    season_games.group_by {|team| team.team_id}
-  end
-
   def most_accurate_team(season_id)
     goals = get_goals(season_id)
     @teams.find {|team| team.team_id == goals.max_by {|_, ratio| ratio}.first}.team_name
