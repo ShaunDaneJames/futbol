@@ -9,7 +9,6 @@ class GameTeamTest < MiniTest::Test
                       team_id: "3",
                       hoa: "away",
                       result: "LOSS",
-                      settled_in: "OT",
                       head_coach: "John Tortorella",
                       goals: "2"}
 
@@ -24,7 +23,6 @@ class GameTeamTest < MiniTest::Test
     assert_equal "2012030221", @game_team.game_id
     assert_equal "3", @game_team.team_id
     assert_equal "away", @game_team.hoa
-    assert_equal "OT", @game_team.settled_in
     assert_equal "John Tortorella", @game_team.head_coach
     assert_equal 2, @game_team.goals
   end
