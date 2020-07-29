@@ -15,13 +15,13 @@ class Stats
   end
 
   def get_goals(season_id)
-    goals = get_team_id(season_id).transform_values do |game_team|
+    get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.goals.to_f} / game_team.sum {|game| game.shots}
     end
   end
 
-  def get_tackels(season_id)
-    tackles = get_team_id(season_id).transform_values do |game_team|
+  def get_tackles(season_id)
+    get_team_id(season_id).transform_values do |game_team|
       game_team.sum {|game| game.tackles}
     end
   end
