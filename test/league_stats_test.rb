@@ -50,5 +50,4 @@ class LeagueStatsTest < MiniTest::Test
   def test_lowest_scoring_home_team
     assert_equal "Sporting Kansas City", @league_stats.lowest_scoring_home_team
   end
-
 end

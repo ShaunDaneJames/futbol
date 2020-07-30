@@ -8,7 +8,7 @@ require './lib/stats'
 
 class StatsTest < Minitest::Test
 
-  def setup #change data path to fixture path 
+  def setup 
     @stats = Stats.new({
       games:      './data/games.csv',
       teams:      './data/teams.csv',

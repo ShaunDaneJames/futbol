@@ -47,5 +47,4 @@ class SeasonStatsTest < Minitest::Test
   def test_it_knows_fewest_tackles
     assert_equal "Sporting Kansas City", @season_stats.fewest_tackles("20122013")
   end
-
 end
