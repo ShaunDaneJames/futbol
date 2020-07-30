@@ -1,4 +1,7 @@
+require_relative 'calculable'
+
 class GameStats < Stats
+  include Calculable
 
   def unique_games
     @games.count
@@ -14,17 +17,17 @@ class GameStats < Stats
 
   def percentage_home_wins
     home_wins = @game_teams.find_all { |game| game.hoa == "home" && game.result == "WIN"}.count
-    (home_wins / unique_games.to_f).round(2)
+    calculate_percentage(home_wins, unique_games)
   end
 
   def percentage_visitor_wins
     visitor_wins = @game_teams.find_all { |game| game.hoa == "away" && game.result == "WIN"}.count
-    (visitor_wins / unique_games.to_f).round(2)
+    calculate_percentage(visitor_wins, unique_games)
   end
 
   def percentage_ties
     tie_games = @game_teams.select { |game|   game.result == "TIE"}.count / 2
-    (tie_games.to_f / unique_games).round(2)
+    calculate_percentage(tie_games, unique_games)
   end
 
   def count_of_games_by_season
@@ -34,11 +37,15 @@ class GameStats < Stats
 
   def average_goals_per_game
     gpg = @game_teams.sum { |game| game.goals.to_f}
-    (gpg / unique_games).round(2)
+    calculate_percentage(gpg, unique_games)
+  end
+
+  def season_hash
+    @games.group_by { |game| game.season}
   end
 
   def average_goals_by_season
-    grouped_by_season = @games.group_by { |game| game.season}
+    grouped_by_season = season_hash
     grouped_by_season.each do |season, games|
       goals = games.sum do |game|
         game.away_goals + game.home_goals

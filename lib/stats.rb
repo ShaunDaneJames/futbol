@@ -30,5 +30,4 @@ class Stats
     season_games = gather_season_games(season_id)
     season_games.group_by {|team| team.team_id}
   end
-
 end

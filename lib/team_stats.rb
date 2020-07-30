@@ -1,4 +1,7 @@
+require_relative 'calculable'
+
 class TeamStats < Stats
+  include Calculable
 
   def team_info(team_id)
     result = @teams.find do |team|
@@ -8,7 +11,8 @@ class TeamStats < Stats
     "franchise_id" => result.franchise_id,
     "team_name" => result.team_name,
     "abbreviation" => result.abbreviation,
-    "link" => result.link}
+    "link" => result.link
+  }
   end
 
   def team_wins(team_id)
@@ -47,10 +51,9 @@ class TeamStats < Stats
   end
 
   def average_win_percentage(team_id)
-    team_losses = @game_teams.find_all {|game| game.team_id == team_id && game.result == "LOSS"}.count
-    team_ties = @game_teams.find_all {|game| game.team_id == team_id && game.result == "TIE"}.count
-    total_games = team_wins(team_id).count + team_losses + team_ties
-    (team_wins(team_id).count.to_f / total_games).round(2)
+    games_played_by_team = @game_teams.find_all {|game| game.team_id == team_id}
+    wins = games_played_by_team.find_all {|game| game.result == "WIN"}.count
+    calculate_percentage(wins, games_played_by_team.count)
   end
 
   def find_all_games_by(team_id)

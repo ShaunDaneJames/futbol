@@ -1,4 +1,3 @@
-require 'pry'
 class LeagueStats < Stats
 
   def count_of_teams
